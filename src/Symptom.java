@@ -1,3 +1,11 @@
+/* The Symptom class is part of the COVID-19 Contract Tracing application.
+*  This application was created to meet the reqirements of week 3's 
+*    challenge from Java Bootcamp. It's overall purpose is to trace the 
+*    fact-to-face contacts that COVID-19 patients have had. By doing so,
+*    emerging clusters can be contained. And as part of the process,
+*    the patient's symptoms are recorded. This class represents a
+*    COVID-19 patient's symptom. 
+*/
 public class Symptom {
     private String name;
     private int numOfDays;

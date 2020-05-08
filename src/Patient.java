@@ -1,4 +1,10 @@
 import java.util.ArrayList;
+/* The Patient class represents a COVID-19 patient in the Contract Tracing 
+*    application implemented for week 3's challenge at Java Bootcamp.
+*    
+*  Kim Levin
+*  05/07/2020
+*/
 public class Patient extends Person {
     private ArrayList<Contact> contactList;
     private ArrayList<Symptom> symptomList;

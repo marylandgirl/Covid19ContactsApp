@@ -1,3 +1,10 @@
+/* The Person class is part of the COVID-19 Contact Tracing Application
+*    assigned for week 3's challenge at Java Bootcamp. It model's a person
+*    and is a super class to the Patient and (patient) Contact classes.
+*    
+* Kim Levin
+* 5/7/2020
+*/
 public class Person {
     private String name;
     private String emailAddr;

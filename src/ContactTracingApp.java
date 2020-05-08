@@ -1,4 +1,14 @@
 import java.util.Scanner;
+/* The ContactTracingApp is an implementation of week 3's programming
+*    challenge for Java Bootcamp. The purpose of the application is to 
+*    produce a report of COVID-19 patients along with any face-to-face
+*    contacts.  The requirements state that the main method of the program
+*    should handle all user interactions. And that's what this program
+*    does.
+*
+*    Kim Levin
+*    5/7/2020
+*/
 public class ContactTracingApp {
     public static void main(String[] args) {
         Scanner keyboard = new Scanner(System.in);
@@ -19,16 +29,16 @@ public class ContactTracingApp {
         String dateContacted = "";
         int numOfDays = 0;
         boolean hasContacts = false;
+        boolean wentPlaces = false;
         String details = "";
         Patient patient;
         Symptom symptom;
         Contact contact;
         Place place;
 
-        System.out.println("Contact Tracing Program");
-        System.out.print("++++++++++++++++++++++++++++");
-        System.out.print("Enter New Patient's Information");
-        System.out.println("++++++++++++++++++++++++++++");
+        System.out.println("Contact Tracing Program\n");
+        System.out.println("Enter New Patient's Information");
+	    System.out.println("++++++++++++++++++++++++++++");
         System.out.print("What is the patient's name? ");
         patientName = keyboard.nextLine();
         System.out.print("What is the patient's phone number? ");
@@ -49,11 +59,13 @@ public class ContactTracingApp {
         response = keyboard.nextLine();
         if ( response.toUpperCase().equals("Y")) {
             symptom = new Symptom("fever");
-            System.out.printf("How many days has %s had a fever? ",patientName);
+            System.out.printf("How many days has %s ",patientName);
+            System.out.print("had a fever? ");
             numOfDays = keyboard.nextInt();
             symptom.setNumOfDays(numOfDays);
             keyboard.nextLine();
-            System.out.printf("Please provide additional information regarding %s's fever ",patientName);
+            System.out.print("Please provide additional information "); 
+            System.out.printf("regarding %s's fever ",patientName); 
             details = keyboard.nextLine();
             symptom.setDescription(details);
             patient.addSymptom(symptom);
@@ -68,17 +80,19 @@ public class ContactTracingApp {
             numOfDays = keyboard.nextInt();
             symptom.setNumOfDays(numOfDays);
             keyboard.nextLine();
-            System.out.printf("Please provide additional information regarding %s's cough ",patientName);
+            System.out.print("Please provide additional information ");
+            System.out.printf("regarding %s's cough ",patientName);
             details = keyboard.nextLine();
             symptom.setDescription(details);
             patient.addSymptom(symptom);
         }
 
-        System.out.print("++++++++++++++++++++++++++++");
-        System.out.print("Enter Patient Contacts");
+        System.out.println("++++++++++++++++++++++++++++");
+        System.out.println("Enter Patient Contacts");
         System.out.println("++++++++++++++++++++++++++++");
 
-        System.out.printf("Has %s had personal contact with anyone (Y/N)? ",patientName);
+        System.out.printf("Has %s had personal contact ",patientName);
+        System.out.print("with anyone (Y/N)? ");
         response = keyboard.nextLine();
         if ( response.toUpperCase().equals("Y")) {
             hasContacts = true;
@@ -100,31 +114,84 @@ public class ContactTracingApp {
                 contact.setCity(contactCity);
                 contact.setState(contactState);
                 place = new Place();
-                System.out.printf("When did %s see %s? ",patientName,contactName);
+                System.out.printf("When did %s see ",patientName);
+                System.out.printf("%s (mm/dd/yyyy)? " , contactName);
                 dateContacted = keyboard.nextLine();
                 contact.setDateContacted(dateContacted);
-                System.out.printf("What place did %s see %s? ",patientName,contactName);
+                System.out.printf("What place did %s ",patientName);
+                System.out.printf("see %s? ",contactName);
                 placeName = keyboard.nextLine();
-                System.out.printf("What city did %s see %s? ",patientName,contactName);
+                System.out.printf("What city did %s ",patientName);
+                System.out.printf("see %s? ",contactName);
                 placeCity = keyboard.nextLine();
-                System.out.printf("What state did %s see %s? ",patientName,contactName);
+                System.out.printf("What state did %s ",patientName);
+                System.out.printf("see %s? ",contactName);
                 placeState = keyboard.nextLine();
                 place.setName(placeName);
                 place.setCity(placeCity);
                 place.setState(placeState);
-                contact.addPlace(place);
+                contact.setPlace(place);
                 patient.addContact(contact);
 
-                System.out.printf("Are there any more personal contacts for %s (Y/N)? ",patientName);
+                System.out.print("Are there any more personal contacts");
+                System.out.printf(" for %s (Y/N)? ",patientName);
                 response = keyboard.nextLine();
                 if ( response.toUpperCase().equals("N")) {
                     hasContacts = false;
                 }
             }
         }
-System.out.println("Testing: +++++++++++");
-for (Symptom sym: patient.getSymptomList()) {
-    System.out.println(sym.toString());
-}
+        System.out.println("++++++++++++++++++++++++++++");
+        System.out.println("Enter Places Patient Has Visited");
+        System.out.println("++++++++++++++++++++++++++++");
+
+        System.out.printf("Has %s visited any places ",patientName);
+        System.out.print("in the last 14 days (Y/N)? ");
+        response = keyboard.nextLine();
+        if ( response.toUpperCase().equals("Y")) {
+           wentPlaces = true;
+           place = new Place();
+           while(wentPlaces) {
+               System.out.printf("What place did %s ",patientName);
+               System.out.print("visit ");
+               placeName = keyboard.nextLine();
+               System.out.printf("What city did %s ",patientName);
+               System.out.print("visit ");
+               placeCity = keyboard.nextLine();
+               System.out.printf("What state did %s ",patientName);
+               System.out.print("visit ");
+               placeState = keyboard.nextLine();
+               place.setName(placeName);
+               place.setCity(placeCity);
+               place.setState(placeState);
+               patient.addPlace(place);
+               System.out.print("Are there additional places ");
+               System.out.printf("%s has visited ",patientName);
+               System.out.print("in the last 14 days (Y/N)? ");
+               response = keyboard.nextLine();
+               if ( response.toUpperCase().equals("N")) {
+                   wentPlaces = false;
+               }
+           } 
+        }
+
+        System.out.println("++++++++++++++++++++++++++++");
+        System.out.println("Contact Tracing Report");
+        System.out.println("++++++++++++++++++++++++++++");
+        System.out.println(patient.toString());
+        System.out.println("\t\t+++Symptoms+++");
+
+        for (Symptom sym: patient.getSymptomList()) {
+            System.out.println(sym.toString());
+        }
+        System.out.println("\t\t+++Contacts+++");
+        for (Contact cont: patient.getContactList()) {
+            System.out.println(cont.toString());
+        }
+        System.out.println("\t\t+++Places Visited+++");
+        for (Place plc: patient.getPlaceList()) {
+            System.out.println(plc.toString());
+        }
+
     }
 }
